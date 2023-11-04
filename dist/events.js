@@ -21,6 +21,10 @@ const forMatchingColumns = (entity, cb, includeProperties = []) => {
                 return false;
             }
 
+            if (typeof entity[propertyName] === 'function') {
+                return false;
+            }
+
             return (
                 entity[propertyName] &&
                 mode === 'regular' &&
