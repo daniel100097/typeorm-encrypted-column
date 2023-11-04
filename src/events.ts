@@ -2,6 +2,16 @@ import {getMetadataArgsStorage, ObjectLiteral} from 'typeorm'
 import {EncryptedColumnOptions, EncryptionOptions} from './interfaces'
 import {createCipheriv, createDecipheriv, randomBytes} from 'crypto'
 
+function isGetter (obj: any, prop: any) {
+  return !!Object.getOwnPropertyDescriptor(obj, prop)['get']
+}
+
+function isSetter (obj: any, prop: any) {
+  return !!Object.getOwnPropertyDescriptor(obj, prop)['set']
+}
+
+
+
 /**
  * For all columns that have encryption options run the supplied function.
  *
@@ -14,7 +24,9 @@ const forMatchingColumns = (entity: ObjectLiteral, cb: (propertyName: string, op
     let validColumns = getMetadataArgsStorage().columns
       .filter(({options, mode, target, propertyName}) => {
           const {encrypt} = options as EncryptedColumnOptions
-
+          if (isGetter(entity[propertyName])){
+              return false;
+          }
           return entity[propertyName] &&
             mode === 'regular' &&
             encrypt &&
