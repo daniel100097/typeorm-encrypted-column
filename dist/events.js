@@ -17,6 +17,9 @@ const forMatchingColumns = (entity, cb, includeProperties = []) => {
         .columns.filter(({ options, mode, target, propertyName }) => {
             const { encrypt } = options;
 
+            if (!encrypt){
+                return false;
+            }
             if (isGetter(entity, propertyName)) {
                 return false;
             }
