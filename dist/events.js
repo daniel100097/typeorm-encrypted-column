@@ -4,11 +4,11 @@ const typeorm_1 = require('typeorm');
 const crypto_1 = require('crypto');
 
 function isGetter(obj, prop) {
-    return !!Object.getOwnPropertyDescriptor(obj, prop)['get'];
+    return !!Object.getOwnPropertyDescriptor(obj, prop)?.['get'];
 }
 
 function isSetter(obj, prop) {
-    return !!Object.getOwnPropertyDescriptor(obj, prop)['set'];
+    return !!Object.getOwnPropertyDescriptor(obj, prop)?.['set'];
 }
 
 const forMatchingColumns = (entity, cb, includeProperties = []) => {
